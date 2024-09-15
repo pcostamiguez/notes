@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/pace-theme-flat-top.css',
+                'resources/css/pace-theme-loading-bar.css',
                 'resources/css/app.css',
                 'resources/css/all.min.css',
                 'resources/css/bootstrap.min.css',
