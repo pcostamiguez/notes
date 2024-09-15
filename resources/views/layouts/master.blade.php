@@ -3,18 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite('resources/css/pace-theme-loading-bar.css')
-    @vite('resources/js/pace.min.js')
-
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
-
     @vite('resources/css/bootstrap.min.css')
     @vite('resources/css/all.min.css')
-
-    @vite('resources/js/bootstrap.bundle.min.js')
-    @vite('resources/js/all.min.js')
-
+    @vite('resources/css/app.css')
     <title>Notes</title>
 </head>
 <body>
@@ -59,5 +50,8 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
     </ul>
 </footer>
+@vite('resources/js/bootstrap.bundle.min.js')
+@vite('resources/js/all.min.js')
+@vite('resources/js/app.js')
 </body>
 </html>
