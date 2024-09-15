@@ -12,6 +12,17 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function authenticate(Request $request): void
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        echo "OK";
+
+    }
+
     public function logout(): void
     {
         echo 'logout';
