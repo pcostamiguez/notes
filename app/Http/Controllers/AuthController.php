@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function login(): View
     {
-        echo 'login';
+        return view('login');
     }
 
-    public function logout()
+    public function logout(): void
     {
         echo 'logout';
     }

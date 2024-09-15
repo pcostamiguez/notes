@@ -39,13 +39,16 @@
                     </ul>
                 </li>
             </ul>
+            <div class="ms-auto d-flex align-items-center">
+                <a href="/profile" class="mb-0 text-white text-decoration-none">Fulano de Tal</a>
+            </div>
         </div>
     </div>
 </nav>
 <div class="container-fluid mt-4 pb-3">
     @yield('content')
 </div>
-<footer class="d-flex flex-wrap justify-content-between align-items-center sticky-bottom py-3 px-4 border-top bg-body-tertiary">
+<footer class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">
     <p class="col-md-4 mb-0 text-body-secondary">© 2024 Notes, Inc</p>
 
     <ul class="nav col-md-4 justify-content-end">
