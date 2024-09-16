@@ -4,9 +4,15 @@
         <div class="login-form">
             <h4 class="text-primary text-center">Entre com as suas credenciais</h4>
             <hr>
-            @if ($errors->any())
+            @if ($errors->any() || session('loginError'))
                 <div class="my-4 alert alert-danger" role="alert">
-                    <i class="fa-solid fa-triangle-exclamation"></i> Corrija os erros.
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    @if ($errors->any())
+                        Corrija os erros abaixo.
+                    @endif
+                    @if (session('loginError'))
+                        {{ session('loginError') }}
+                    @endif
                 </div>
             @endif
             <form action="{{ route('auth.authenticate') }}" method="post">

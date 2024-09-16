@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(): View
+    public function login(): RedirectResponse|View
     {
+        if (auth()->check()) {
+            return redirect('/');
+        }
+
         return view('login');
     }
 
-    public function authenticate(Request $request): void
+    public function authenticate(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string|min:6|max:50',
+            'password' => 'required|string|min:3|max:50',
         ],[
             'email.required' => 'E-mail é obrigatório',
             'email.email' => 'E-mail inválido',
@@ -25,12 +35,38 @@ class AuthController extends Controller
             'password.max' => 'A senha deve ter no máximo :max caracteres'
         ]);
 
-        echo "OK";
+        $email = $request->input('email');
+        $password = $request->input('password');
 
+        $user = User::where('email', $email)
+            ->whereNull('deleted_at')
+            ->first();
+
+        if (!$user || !Hash::check($password, $user->password)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('loginError', 'E-mail e/ou senha incorretos. Cód. #003');
+        }
+
+        $user->last_login = now();
+        $user->save();
+
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+        return redirect()->intended();
     }
 
-    public function logout(): void
+    public function logout(Request $request): RedirectResponse
     {
-        echo 'logout';
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('auth.login');
     }
+
 }

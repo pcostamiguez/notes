@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite('resources/css/bootstrap.min.css')
-    @vite('resources/css/all.min.css')
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('js/all.min.js') }}" defer></script>
+
     <title>Notes</title>
 </head>
 <body>
@@ -20,6 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Início</a>
                 </li>
+                @if(auth()->check())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Notas
@@ -29,9 +35,12 @@
                         <li><a class="dropdown-item" href="#">Cadastrar</a></li>
                     </ul>
                 </li>
+                @endif
             </ul>
             <div class="ms-auto d-flex align-items-center">
-                <a href="/profile" class="mb-0 text-white text-decoration-none">Fulano de Tal</a>
+                @if(auth()->check())
+                    <a href="/logout" class="mb-0 text-white text-decoration-none">Sair</a>
+                @endif
             </div>
         </div>
     </div>
@@ -50,8 +59,6 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
     </ul>
 </footer>
-@vite('resources/js/bootstrap.bundle.min.js')
-@vite('resources/js/all.min.js')
-@vite('resources/js/app.js')
+
 </body>
 </html>
