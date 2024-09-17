@@ -13,10 +13,6 @@ class AuthController extends Controller
 {
     public function login(): RedirectResponse|View
     {
-        if (auth()->check()) {
-            return redirect('/');
-        }
-
         return view('login');
     }
 
