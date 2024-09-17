@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite('css/bootstrap.min.css')
-    @vite('css/fontawesome.min.css')
-    @vite('css/app.css')
-    @vite('js/app.js')
-    @vite('js/bootstrap.bundle.min.js')
-    @vite('js/fontawesome.min.js')
+    @vite('resources/css/bootstrap.min.css')
+    @vite('resources/css/fontawesome.min.css')
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
+    @vite('resources/js/bootstrap.bundle.min.js')
+    @vite('resources/js/fontawesome.min.js')
     <title>Notes</title>
 </head>
 <body>
@@ -47,14 +47,10 @@
     @yield('content')
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">
-    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Notes, Inc</p>
+    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Notes - v.1.0.0</p>
 
     <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        <li class="nav-item"><a class="nav-link px-2 text-body-secondary fw-bold">Núcleo DEV</a></li>
     </ul>
 </footer>
 
