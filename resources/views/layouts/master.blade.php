@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('js/all.min.js') }}" defer></script>
-
+    @vite('css/bootstrap.min.css')
+    @vite('css/fontawesome.min.css')
+    @vite('css/app.css')
+    @vite('js/app.js')
+    @vite('js/bootstrap.bundle.min.js')
+    @vite('js/fontawesome.min.js')
     <title>Notes</title>
 </head>
 <body>

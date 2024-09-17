@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -27,7 +25,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string|min:3|max:50',
-        ],[
+        ], [
             'email.required' => 'E-mail é obrigatório',
             'email.email' => 'E-mail inválido',
             'password.required' => 'Senha é obrigatório',
@@ -68,5 +66,4 @@ class AuthController extends Controller
 
         return redirect()->route('auth.login');
     }
-
 }
