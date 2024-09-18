@@ -6,11 +6,11 @@
         <hr>
         <div class="d-flex flex-column gap-2 justify-content-center align-items-center">
             <h3>Você não tem notas</h3>
-            <button class="btn btn-primary">Criar nota</button>
+            <a href="{{ route('note.create') }}" class="btn btn-lg btn-primary">Criar nota</a>
         </div>
         <hr>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary">Nova nota</button>
+            <a href="{{ route('note.create') }}" class="btn btn-primary">Nova nota</a>
         </div>
         <br>
         <div class="d-flex flex-column gap-4 bg-body-tertiary border border-black p-3 rounded-3">

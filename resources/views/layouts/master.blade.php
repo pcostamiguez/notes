@@ -80,6 +80,7 @@
     <p class="col-md-4 mb-0 text-body-secondary">© 2024 Notes - v.1.0.0</p>
 
     <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary fst-italic">Termos de uso</a></li>
         <li class="nav-item"><a class="nav-link px-2 text-body-secondary fw-bold">Núcleo DEV</a></li>
     </ul>
 </footer>
