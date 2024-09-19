@@ -16,5 +16,7 @@ Route::middleware([CheckIfUserIsAuthenticated::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/notes', [NoteController::class, 'index'])->name('note.index');
     Route::get('/new_note', [NoteController::class, 'create'])->name('note.create');
+    Route::get('/notes/edit/{id}', [NoteController::class, 'edit'])->name('note.edit');
+    Route::get('/notes/destroy/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

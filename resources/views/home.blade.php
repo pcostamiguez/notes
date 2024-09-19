@@ -2,38 +2,31 @@
 
 @section('content')
     <div>
+        @if ($errors->any() || session('error'))
+            <div class="my-4 alert alert-danger" role="alert">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                @if ($errors->any() || session('error'))
+                    Houve um erro na sua aplicação.
+                @endif
+            </div>
+        @endif
         <h1>Bem vindo ao Notes!</h1>
         <hr>
-        <div class="d-flex flex-column gap-2 justify-content-center align-items-center">
-            <h3>Você não tem notas</h3>
-            <a href="{{ route('note.create') }}" class="btn btn-lg btn-primary">Criar nota</a>
-        </div>
-        <hr>
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('note.create') }}" class="btn btn-primary">Nova nota</a>
-        </div>
-        <br>
-        <div class="d-flex flex-column gap-4 bg-body-tertiary border border-black p-3 rounded-3">
-            <div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5>Título da nota</h5>
-                        <p class="fst-italic">Criado em 00/00/0000 00:00:00</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-warning">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
-                        <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <hr>
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur dignissimos ducimus eos exercitationem fuga nihil nisi perspiciatis quas sapiente veritatis! Architecto, atque corporis cumque deserunt fugiat iste quibusdam reprehenderit veniam!</p>
-                </div>
+        @if(count($notes) === 0)
+            <div class="d-flex flex-column gap-2 justify-content-center align-items-center">
+                <h3>Você não tem notas</h3>
+                <a href="{{ route('note.create') }}" class="btn btn-lg btn-primary">Criar nota</a>
             </div>
-        </div>
+            <hr>
+
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('note.create') }}" class="btn btn-primary">Nova nota</a>
+            </div>
+            <br>
+        @else
+            @foreach($notes as $note)
+            @include('note')
+            @endforeach
+        @endif
     </div>
 @endsection
