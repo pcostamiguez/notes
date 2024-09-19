@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
-use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Contracts\View\Factory;
+use App\Services\Utils;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -19,9 +17,8 @@ class NoteController extends Controller
      */
     public function index(): View
     {
-        //return view('note_list');
         return view('note_list', [
-            'notes' => DB::table('notes')->paginate(15)
+            'notes' => DB::table('notes')->paginate(2)
         ]);
     }
 
@@ -38,7 +35,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo "criação";
     }
 
     /**
@@ -54,14 +51,14 @@ class NoteController extends Controller
      */
     public function edit(string $id): View | RedirectResponse
     {
-        $decryptedId = $this->decryptId($id);
+        $decryptedId = Utils::decryptId($id);
 
         if ($decryptedId instanceof RedirectResponse) {
             return $decryptedId;
         }
 
         try {
-            $note = Note::find($decryptedId);
+            $note = Note::find($decryptedId)->first();
             return view('note_form', ['note' => $note]);
         } catch (\Exception $e) {
             Log::error(" NoteController - method: edit (find): " . $e->getMessage());
@@ -74,7 +71,8 @@ class NoteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $id = Utils::decryptId($id);
+        echo "update do id: $id";
     }
 
     /**
@@ -83,16 +81,5 @@ class NoteController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    private function decryptId(string $id): string | RedirectResponse
-    {
-        try {
-            $decryptedId = Crypt::decrypt($id);
-        } catch (DecryptException $e) {
-            Log::error("NoteController - method: decryptId: " . $e->getMessage());
-            return redirect()->route('home.index')->with('error', 'Failed to decrypt ID');
-        }
-        return $decryptedId;
     }
 }

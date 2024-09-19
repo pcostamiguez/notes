@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $user_notes = Auth::user()->makeHidden('password')->notes()->get()->toArray();
+        $user_notes = Auth::user()->makeHidden('password')->notes()->get();
 
         return view('home', ['notes' => $user_notes]);
     }

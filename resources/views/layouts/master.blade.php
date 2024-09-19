@@ -73,7 +73,7 @@
     </div>
 </nav>
 
-<div class="container-fluid mt-4 pb-3">
+<div class="container-fluid my-lg-5 pb-3">
     @yield('content')
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">
