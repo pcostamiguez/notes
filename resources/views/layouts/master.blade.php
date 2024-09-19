@@ -17,7 +17,7 @@
     @vite('resources/assets/js/solid.min.js')
     <title>Notes</title>
 </head>
-<body>
+<body style="background: #fafafa">
 <nav class="navbar sticky-top navbar-expand-lg border-bottom border-black" style="background-color: #7382a0;" data-bs-theme="light">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="/">NOTES</a>
@@ -72,8 +72,7 @@
         </div>
     </div>
 </nav>
-
-<div class="container-fluid my-lg-5 pb-3">
+<div class="container my-lg-5 pb-lg-5">
     @yield('content')
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">

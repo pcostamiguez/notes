@@ -3,12 +3,20 @@
 @section('content')
     <h3>{{ isset($note) ? 'Editar Nota #' . $note->id : 'Nova Nota' }}</h3>
     <hr>
-    <form action="{{ isset($note) ? route('note.update', ['id' => Crypt::encrypt($note['id'])]) : route('note.store') }}" method="POST">
+    <form action="{{ isset($note) ? route('note.update', ['id' => Crypt::encrypt($note->id)]) : route('note.store') }}" method="POST">
         @csrf
         @isset($note)
             @method('PUT')
         @endisset
         <div class="container">
+            @if ($errors->any() || session('error'))
+                <div class="my-4 alert alert-danger" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    @if ($errors->any() || session('error'))
+                        Houve um erro na sua aplicação.
+                    @endif
+                </div>
+            @endif
             <div class="mb-3">
                 <label for="title" class="form-label fw-bold">Título</label>
                 <input type="text"

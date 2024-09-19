@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NoteRequest;
 use App\Models\Note;
 use App\Services\Utils;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -17,9 +19,11 @@ class NoteController extends Controller
      */
     public function index(): View
     {
-        return view('note_list', [
-            'notes' => DB::table('notes')->paginate(2)
-        ]);
+        $notes = Note::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
+
+        return view('note_list', compact('notes'));
     }
 
     /**
@@ -33,9 +37,26 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(NoteRequest $request): RedirectResponse
     {
-        echo "criação";
+        try {
+            // Obter usuário logado
+            $user = auth()->user();
+
+            // Verificar se o usuário está autenticado
+            if (!$user) {
+                return redirect()->route('login')->with(['error' => 'Você precisa estar logado para criar uma nota.']);
+            }
+
+            // Preencher os campos e salvar a nota usando o relacionamento
+            $user->notes()->create($request->validated());
+
+            // Retornar resposta ao usuário com mensagem de sucesso
+            return redirect()->route('note.index')->with('success', 'Nota salva com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Erro ao processar formulário: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao enviar o formulário.');
+        }
     }
 
     /**
@@ -58,7 +79,7 @@ class NoteController extends Controller
         }
 
         try {
-            $note = Note::find($decryptedId)->first();
+            $note = Note::all()->findOrFail($decryptedId);
             return view('note_form', ['note' => $note]);
         } catch (\Exception $e) {
             Log::error(" NoteController - method: edit (find): " . $e->getMessage());
@@ -69,10 +90,25 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(NoteRequest $request, string $id): RedirectResponse
     {
-        $id = Utils::decryptId($id);
-        echo "update do id: $id";
+        $decryptedId = Utils::decryptId($id);
+
+        if ($decryptedId instanceof RedirectResponse) {
+            return $decryptedId;
+        }
+
+        try {
+            $note = Note::all()->findOrFail($decryptedId);
+            $note->title = $request->input('title');
+            $note->body = $request->input('body');
+            $note->save();
+            return redirect()->route('note.index')->with(['success' => 'Nota atualizada com sucesso!']);
+        } catch (\Exception $e) {
+            Log::error(" NoteController - method: update (update): " . $e->getMessage());
+            return redirect()->route('note.index')->with('error', $e->getMessage());
+        }
+
     }
 
     /**

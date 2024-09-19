@@ -25,8 +25,11 @@
             <br>
         @else
             @foreach($notes as $note)
-            @include('note')
+                @include('note')
             @endforeach
+            <div class="d-flex justify-content-center flex-column gap-4">
+                {{ $notes->links('pagination::bootstrap-5') }}
+            </div>
         @endif
     </div>
 @endsection

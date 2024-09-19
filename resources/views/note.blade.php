@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Facades\Crypt; @endphp
-<div class="d-flex flex-column gap-4 bg-body-tertiary border border-black p-3 my-3 rounded-3">
+<div class="d-flex flex-column gap-4 bg-white border border-black p-3 my-3 rounded-3">
     <div>
         <div class="d-flex justify-content-between">
             <div>
