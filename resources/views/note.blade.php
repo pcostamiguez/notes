@@ -14,7 +14,7 @@
                 <a href="{{ route('note.edit', Crypt::encrypt($note->id)) }}" class="btn btn-warning">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </a>
-                <a href="{{ route('note.destroy', Crypt::encrypt($note->id)) }}" class="btn btn-danger">
+                <a href="{{ route('note.destroyConfirm', Crypt::encrypt($note->id)) }}" class="btn btn-danger">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </div>

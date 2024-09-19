@@ -114,8 +114,20 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function destroyConfirm(string $id): View|RedirectResponse
+    {
+        $decryptedId = Utils::decryptId($id);
+
+        if ($decryptedId instanceof RedirectResponse) {
+            return $decryptedId;
+        }
+        $note = Note::all()->findOrFail($decryptedId);
+        return view('note_destroy_confirm', ['note' => $note]);
+    }
+
     public function destroy(string $id)
     {
-        //
+        $decryptedId = Utils::decryptId($id);
+        dd($decryptedId);
     }
 }
