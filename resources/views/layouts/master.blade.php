@@ -83,6 +83,18 @@
         <li class="nav-item"><a class="nav-link px-2 text-body-secondary fw-bold">Núcleo DEV</a></li>
     </ul>
 </footer>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let forms = document.querySelectorAll('form');
+        forms.forEach(function(form) {
+            form.addEventListener('submit', function() {
+                let submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
