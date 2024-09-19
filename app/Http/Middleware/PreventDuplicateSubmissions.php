@@ -23,7 +23,7 @@ class PreventDuplicateSubmissions
             return response()->redirectToRoute("note.index")->with(['warning' => 'Várias submissões detectadas.']);
         }
 
-        Cache::put($key, true, 20);
+        Cache::put($key, true, 5);
 
         return $next($request);
     }

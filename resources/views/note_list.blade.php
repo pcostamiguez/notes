@@ -1,7 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-    <h3>Lista de Notas</h3>
+    <div class="d-flex justify-content-between">
+        <h3>Lista de Notas</h3>
+        <a class="btn btn-primary" href="{{ route('note.create') }}"><i class="fa-solid fa-plus"></i> Nova nota</a>
+    </div>
     <hr>
     @if(session('success'))
         <div class="alert alert-success">

@@ -16,8 +16,8 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 Route::middleware([CheckIfUserIsAuthenticated::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/notes', [NoteController::class, 'index'])->name('note.index');
-    Route::get('/new_note', [NoteController::class, 'create'])->name('note.create');
-    Route::post('/new_note', [NoteController::class, 'store'])
+    Route::get('/notes/create', [NoteController::class, 'create'])->name('note.create');
+    Route::post('/notes/create', [NoteController::class, 'store'])
         ->middleware([PreventDuplicateSubmissions::class])
         ->name('note.store');
     Route::get('/notes/edit/{id}', [NoteController::class, 'edit'])->name('note.edit');

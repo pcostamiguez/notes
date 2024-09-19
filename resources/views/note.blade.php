@@ -1,10 +1,14 @@
 @php use Illuminate\Support\Facades\Crypt; @endphp
 <div class="d-flex flex-column gap-4 bg-white border border-black p-3 my-3 rounded-3">
-    <div>
+    <div class="container">
         <div class="d-flex justify-content-between">
             <div>
                 <h5>{{ $note->title }}</h5>
-                <p class="fst-italic">Criado em {{ date('d/m/Y H:i', strtotime($note->created_at)) }}</p>
+                @if($note->created_at != $note->updated_at)
+                    <p class="fst-italic">Criado em {{ date('d/m/Y H:i', strtotime($note->created_at)) }} - Atualizado em {{ date('d/m/Y H:i', strtotime($note->updated_at)) }}</p>
+                @else
+                    <p class="fst-italic">Criado em {{ date('d/m/Y H:i', strtotime($note->created_at)) }}</p>
+                @endif
             </div>
             <div>
                 <a href="{{ route('note.edit', Crypt::encrypt($note->id)) }}" class="btn btn-warning">
@@ -16,8 +20,8 @@
             </div>
         </div>
         <hr>
-        <div>
-            <p>{{ $note->body }}</p>
+        <div class="overflow-hidden" style="max-height: 100px;">
+            <p class="mb-0 text-wrap" style="word-break: break-word;">{{ $note->body }}</p>
         </div>
     </div>
 </div>
