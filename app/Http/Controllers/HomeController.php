@@ -18,10 +18,5 @@ class HomeController extends Controller
             ->paginate(3);
         return view('home', ['notes' => $user_notes]);
     }
-
-    public function newNote()
-    {
-        echo "Nova nota";
-    }
 }
 

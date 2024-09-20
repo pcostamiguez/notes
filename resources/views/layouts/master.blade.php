@@ -20,14 +20,14 @@
 <body style="background: #fafafa">
 <nav class="navbar sticky-top navbar-expand-lg border-bottom border-black" style="background-color: #7382a0;" data-bs-theme="light">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" href="/">NOTES</a>
+        <a class="navbar-brand text-white" href="{{ route('home.index') }}">NOTES</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="/">Início</a>
+                    <a class="nav-link active text-white" aria-current="page" href="{{ route('home.index') }}">Início</a>
                 </li>
                 @if(auth()->check())
                     <li class="nav-item dropdown">
@@ -64,7 +64,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">Alterar senha</a></li>
                             <li><a class="dropdown-item" href="#">Fazer solicitação</a></li>
-                            <li><a class="dropdown-item" href="/logout">Sair</a></li>
+                            <li><a class="dropdown-item" href="{{ route('auth.logout') }}">Sair</a></li>
                         </ul>
                     </li>
                 @endif
