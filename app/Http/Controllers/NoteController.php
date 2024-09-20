@@ -125,9 +125,16 @@ class NoteController extends Controller
         return view('note_destroy_confirm', ['note' => $note]);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         $decryptedId = Utils::decryptId($id);
-        dd($decryptedId);
+        try {
+            $note = Note::all()->findOrFail($decryptedId);
+            $note->delete();
+            return redirect()->route('note.index')->with(['success' => 'Nota apagada com sucesso!']);
+        }catch (\Exception $e){
+            Log::error(" NoteController - method: destroy (destroy): " . $e->getMessage());
+            return redirect()->route('note.index')->with('error', $e->getMessage());
+        }
     }
 }

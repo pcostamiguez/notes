@@ -18,12 +18,11 @@
                 <a href="{{ route('note.create') }}" class="btn btn-lg btn-primary">Criar nota</a>
             </div>
             <hr>
-
+            <br>
+        @else
             <div class="d-flex justify-content-end">
                 <a href="{{ route('note.create') }}" class="btn btn-primary">Nova nota</a>
             </div>
-            <br>
-        @else
             @foreach($notes as $note)
                 @include('note')
             @endforeach
