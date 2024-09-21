@@ -12,7 +12,11 @@
             <td>{{ $audit->created_at->diffForHumans() }}</td>
         </tr>
         <tr>
-            <td class="w-25 fw-bold">Usuário</td>
+            <td class="w-25 fw-bold">ID do Usuário</td>
+            <td>{{ $audit->user_id }}</td>
+        </tr>
+        <tr>
+            <td class="w-25 fw-bold">E-mail do Usuário</td>
             <td>{{ $audit->user_email }}</td>
         </tr>
         <tr>

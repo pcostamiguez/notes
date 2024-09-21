@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h3>{{ isset($note) ? 'Editar Nota #' . $note->id : 'Nova Nota' }}</h3>
+    <h3>{{ isset($note) ? 'Editar Nota ID: ' . $note->id : 'Nova Nota' }}</h3>
     <hr>
     <form action="{{ isset($note) ? route('note.update', ['id' => Crypt::encrypt($note->id)]) : route('note.store') }}" method="POST">
         @csrf

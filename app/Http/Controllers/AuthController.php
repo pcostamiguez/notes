@@ -18,17 +18,19 @@ class AuthController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:3|max:50',
-        ],
-        [
-            'email.required' => 'E-mail é obrigatório',
-            'email.email' => 'E-mail inválido',
-            'password.required' => 'Senha é obrigatório',
-            'password.min' => 'A senha deve ter no mínimo :min caracteres',
-            'password.max' => 'A senha deve ter no máximo :max caracteres'
-        ]);
+        $request->validate(
+            [
+                'email' => 'required|string|email',
+                'password' => 'required|string|min:3|max:50',
+            ],
+            [
+                'email.required' => 'E-mail é obrigatório',
+                'email.email' => 'E-mail inválido',
+                'password.required' => 'Senha é obrigatório',
+                'password.min' => 'A senha deve ter no mínimo :min caracteres',
+                'password.max' => 'A senha deve ter no máximo :max caracteres'
+            ]
+        );
 
         $email = $request->input('email');
         $password = $request->input('password');
