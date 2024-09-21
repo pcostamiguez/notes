@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NoteRequest;
+use App\Models\AuditLog;
 use App\Models\Note;
 use App\Services\Utils;
 use Illuminate\Http\RedirectResponse;
@@ -126,13 +127,29 @@ class NoteController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $decryptedId = Utils::decryptId($id);
+        if ($decryptedId instanceof RedirectResponse) {
+            return $decryptedId;
+        }
         try {
-            $note = Note::all()->findOrFail($decryptedId);
+            $note = Note::findOrFail($decryptedId);
             $note->delete();
             return redirect()->route('note.index')->with(['success' => 'Nota apagada com sucesso!'])->setStatusCode(200);
         }catch (\Exception $e){
             Log::error(" NoteController - method: destroy (destroy): " . $e->getMessage());
             return redirect()->route('note.index')->with('error', $e->getMessage())->setStatusCode(500);
         }
+    }
+
+    public function audit(): View
+    {
+        $audits = AuditLog::orderBy('created_at', 'desc')->paginate(10);
+        return view('audits', compact('audits'));
+    }
+
+    public function auditDetail(string $id): View
+    {
+        $decryptedId = Utils::decryptId($id);
+        $audit = AuditLog::all()->findOrFail($decryptedId);
+        return view('audit_detail', compact('audit'));
     }
 }

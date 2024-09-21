@@ -14,7 +14,7 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
 });
 
-Route::middleware([CheckIfUserIsAuthenticated::class, PreventDuplicateSubmissions::class])->group(function () {
+Route::middleware([CheckIfUserIsAuthenticated::class, AuditLogMiddleware::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/notes', [NoteController::class, 'index'])->name('note.index');
 
@@ -26,6 +26,9 @@ Route::middleware([CheckIfUserIsAuthenticated::class, PreventDuplicateSubmission
 
     Route::get('/notes/destroy/{id}', [NoteController::class, 'destroyConfirm'])->name('note.destroyConfirm');
     Route::delete('/notes/destroy/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
+
+    Route::get('/notes/audit', [NoteController::class, 'audit'])->name('note.audit')->withoutMiddleware([AuditLogMiddleware::class]);
+    Route::get('/notes/audit/{id}', [NoteController::class, 'auditDetail'])->name('note.auditDetail')->withoutMiddleware([AuditLogMiddleware::class]);
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

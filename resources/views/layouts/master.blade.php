@@ -63,7 +63,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">Alterar senha</a></li>
-                            <li><a class="dropdown-item" href="#">Fazer solicitação</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ route('note.audit') }}">Auditoria</a></li>
                             <li><a class="dropdown-item" href="{{ route('auth.logout') }}">Sair</a></li>
                         </ul>
                     </li>

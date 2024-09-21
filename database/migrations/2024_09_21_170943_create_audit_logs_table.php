@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('url');
             $table->string('uri');
             $table->string('execution_time');
+            $table->string('method');
             $table->timestamps();
         });
     }
