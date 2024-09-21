@@ -52,10 +52,10 @@ class NoteController extends Controller
             $user->notes()->create($request->validated());
 
             // Retornar resposta ao usuário com mensagem de sucesso
-            return redirect()->route('note.index')->with('success', 'Nota salva com sucesso!');
+            return redirect()->route('note.index')->with('success', 'Nota salva com sucesso!')->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error('Erro ao processar formulário: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Erro ao enviar o formulário.');
+            return redirect()->back()->with('error', 'Erro ao enviar o formulário.')->setStatusCode(500);
         }
     }
 
@@ -101,10 +101,10 @@ class NoteController extends Controller
         try {
             $note = Note::findOrFail($decryptedId);
             $note->update($request->validated());
-            return redirect()->route('note.index')->with(['success' => 'Nota atualizada com sucesso!']);
+            return redirect()->route('note.index')->with(['success' => 'Nota atualizada com sucesso!'])->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error(" NoteController - method: update (update): " . $e->getMessage());
-            return redirect()->route('note.index')->with('error', $e->getMessage());
+            return redirect()->route('note.index')->with('error', $e->getMessage())->setStatusCode(500);
         }
 
     }
@@ -129,10 +129,10 @@ class NoteController extends Controller
         try {
             $note = Note::all()->findOrFail($decryptedId);
             $note->delete();
-            return redirect()->route('note.index')->with(['success' => 'Nota apagada com sucesso!']);
+            return redirect()->route('note.index')->with(['success' => 'Nota apagada com sucesso!'])->setStatusCode(200);
         }catch (\Exception $e){
             Log::error(" NoteController - method: destroy (destroy): " . $e->getMessage());
-            return redirect()->route('note.index')->with('error', $e->getMessage());
+            return redirect()->route('note.index')->with('error', $e->getMessage())->setStatusCode(500);
         }
     }
 }

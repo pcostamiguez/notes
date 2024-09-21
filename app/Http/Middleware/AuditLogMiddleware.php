@@ -19,15 +19,23 @@ class AuditLogMiddleware
 
         $executionTimeMs = number_format($executionTime * 1000, 2);
 
-        if ($response->isSuccessful()) {
-            $this->logAudit($request, 'success', $response->status(), $executionTimeMs);
-        } elseif ($response->isRedirection()) {
-            $this->logAudit($request, 'redirect', $response->status(), $executionTimeMs);
-        } else {
-            $this->logAudit($request, 'error', $response->status(), $executionTimeMs);
-        }
+        $status = $this->isEffectiveAction($request, $response) ? 'success' : 'attempt';
+
+        $this->logAudit($request, $status, $response->getStatusCode(), $executionTimeMs);
 
         return $response;
+    }
+
+    private function isEffectiveAction(Request $request, Response $response): bool
+    {
+        if (in_array($request->method(), ['PUT', 'POST', 'DELETE'])) {
+            if ($response->isRedirection()) {
+                return false;
+            }
+
+            return in_array($response->getStatusCode(), [200, 201, 204]);
+        }
+        return true;
     }
 
     protected function logAudit(Request $request, string $status, int $responseStatus, float $executionTime): void
@@ -42,21 +50,12 @@ class AuditLogMiddleware
             $decryptedId = Utils::decryptId($request->route('id'));
             $sendedInfo['id'] = $decryptedId;
         }
-        $urlSegments = explode('/', $request->fullUrl());
-        foreach ($urlSegments as &$segment) {
-            if ($this->isEncryptedId($segment)) {
-                $segment = Utils::decryptId($segment);
-            }
-        }
-        $decryptedUrl = implode('/', $urlSegments);
 
-        $uriSegments = explode('/', $request->getRequestUri());
-        foreach ($uriSegments as &$segment) {
-            if ($this->isEncryptedId($segment)) {
-                $segment = Utils::decryptId($segment);
-            }
-        }
-        $decryptedUri = implode('/', $uriSegments);
+        $url = rtrim($request->fullUrl(), '/');
+        $decryptedUrl = $this->decryptUrlSegments($url);
+
+        $uri = rtrim($request->getRequestUri(), '/');
+        $decryptedUri = $this->decryptUrlSegments($uri);
 
         $otherData = $request->except('_method', '_token');
         if (!empty($otherData)) {
@@ -77,17 +76,35 @@ class AuditLogMiddleware
                 'execution_time' => $executionTime . 'ms',
             ];
 
-            $auditJson = json_encode($audit, JSON_PRETTY_PRINT);
-            $auditJson = stripslashes($auditJson);
+            $auditJson = json_encode($audit, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
             Log::info($auditJson);
         }
+    }
+
+    private function decryptUrlSegments(string $url): string
+    {
+        $segments = explode('/', $url);
+        foreach ($segments as &$segment) {
+            if ($this->isEncryptedId($segment)) {
+                $segment = Utils::decryptId($segment);
+            }
+        }
+        return implode('/', $segments);
+    }
+
+    private function decryptSegments(string $url): string
+    {
+        $segments = explode('/', $url);
+        foreach ($segments as &$segment) {
+            if ($this->isEncryptedId($segment)) {
+                $segment = Utils::decryptId($segment);
+            }
+        }
+        return implode('/', $segments);
     }
 
     private function isEncryptedId(string $segment): bool
     {
         return preg_match('/^[A-Za-z0-9=]+$/', $segment) && strlen($segment) > 20;
     }
-
-
-
 }
