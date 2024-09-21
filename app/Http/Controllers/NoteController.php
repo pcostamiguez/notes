@@ -99,10 +99,8 @@ class NoteController extends Controller
         }
 
         try {
-            $note = Note::all()->findOrFail($decryptedId);
-            $note->title = $request->input('title');
-            $note->body = $request->input('body');
-            $note->save();
+            $note = Note::findOrFail($decryptedId);
+            $note->update($request->validated());
             return redirect()->route('note.index')->with(['success' => 'Nota atualizada com sucesso!']);
         } catch (\Exception $e) {
             Log::error(" NoteController - method: update (update): " . $e->getMessage());

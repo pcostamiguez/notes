@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Middleware\CheckIfUserIsAuthenticated;
+use App\Http\Middleware\AuditLogMiddleware;
 use App\Http\Middleware\PreventDuplicateSubmissions;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
 });
 
-Route::middleware([CheckIfUserIsAuthenticated::class])->group(function () {
+Route::middleware([CheckIfUserIsAuthenticated::class])->middleware([AuditLogMiddleware::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/notes', [NoteController::class, 'index'])->name('note.index');
 
