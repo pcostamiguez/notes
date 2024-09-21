@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\AuditLog;
 use App\Services\Utils;
 use Closure;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -78,8 +77,6 @@ class AuditLogMiddleware
             ];
 
             AuditLog::create($audit);
-            //$auditJson = json_encode($audit, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-            //Log::info($auditJson);
         }
     }
 
