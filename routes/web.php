@@ -14,14 +14,12 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
 });
 
-Route::middleware([CheckIfUserIsAuthenticated::class])->middleware([AuditLogMiddleware::class])->group(function () {
+Route::middleware([CheckIfUserIsAuthenticated::class, PreventDuplicateSubmissions::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/notes', [NoteController::class, 'index'])->name('note.index');
 
     Route::get('/notes/create', [NoteController::class, 'create'])->name('note.create');
-    Route::post('/notes/create', [NoteController::class, 'store'])
-        ->middleware([PreventDuplicateSubmissions::class])
-        ->name('note.store');
+    Route::post('/notes/create', [NoteController::class, 'store'])->name('note.store');
 
     Route::get('/notes/edit/{id}', [NoteController::class, 'edit'])->name('note.edit');
     Route::put('/notes/edit/{id}', [NoteController::class, 'update'])->name('note.update');
