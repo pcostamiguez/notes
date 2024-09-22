@@ -14,7 +14,9 @@
                 <form action="{{ route('note.destroy', Crypt::encrypt($note->id)) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
+                    <button class="btn btn-danger" type="submit">
+                        <span class="d-none spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        <span class="visually-hidden" role="status">Loading...</span>
                         Sim, Desejo Apagar!
                     </button>
                 </form>

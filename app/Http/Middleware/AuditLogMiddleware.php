@@ -64,17 +64,17 @@ class AuditLogMiddleware
 
         if (!empty($sendedInfo)) {
             $audit = [
-                'user_id'           => $request->user()->id,
-                'user_email'        => $request->user()->email,
-                'ip'                => $request->ip(),
-                'sended_info'       => $sendedInfo,
-                'created_at'        => now()->toDateTimeString(),
-                'status'            => $status,
-                'response_code'     => $responseStatus,
-                'url'               => $decryptedUrl,
-                'uri'               => $decryptedUri,
-                'execution_time'    => $executionTime . 'ms',
-                'method'            => $request->method(),
+                'user_id' => $request->user()->id,
+                'user_email' => $request->user()->email,
+                'ip' => $request->ip(),
+                'sended_info' => $sendedInfo,
+                'created_at' => now()->toDateTimeString(),
+                'status' => $status,
+                'response_code' => $responseStatus,
+                'url' => $decryptedUrl,
+                'uri' => $decryptedUri,
+                'execution_time' => $executionTime . 'ms',
+                'method' => $request->method(),
             ];
 
             AuditLog::create($audit);

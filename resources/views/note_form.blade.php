@@ -44,7 +44,11 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <input class="btn btn-success" type="submit" value="Salvar">
+                <button class="btn btn-success" type="submit">
+                    <span class="d-none spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span class="visually-hidden" role="status">Loading...</span>
+                    Salvar
+                </button>
             </div>
         </div>
     </form>

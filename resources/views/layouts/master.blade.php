@@ -18,20 +18,24 @@
     <title>Notes</title>
 </head>
 <body style="background: #fafafa">
-<nav class="navbar sticky-top navbar-expand-lg border-bottom border-black" style="background-color: #7382a0;" data-bs-theme="light">
+<nav class="navbar sticky-top navbar-expand-lg border-bottom border-black" style="background-color: #7382a0;"
+     data-bs-theme="light">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="{{ route('home.index') }}">NOTES</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="{{ route('home.index') }}">Início</a>
+                    <a class="nav-link active text-white" aria-current="page"
+                       href="{{ route('home.index') }}">Início</a>
                 </li>
                 @if(auth()->check())
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             Notas
                         </a>
                         <ul class="dropdown-menu">
@@ -44,7 +48,8 @@
             <ul class="navbar-nav ms-auto">
                 @if(auth()->check())
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             <i class="fa-solid fa-bell bell-ring text-warning"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end p-3" style="min-width: 300px;">
@@ -52,13 +57,17 @@
                                 <span class="d-block fw-bold">Nova Notificação</span>
                                 <small class="text-muted">Você recebeu uma nova mensagem de fulano.</small>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-center" href="#">Ver todas as <b class="text-danger">99</b> notificações</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-center" href="#">Ver todas as <b class="text-danger">99</b>
+                                    notificações</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             {{ auth()->user()->email }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -75,7 +84,8 @@
 <div class="container my-lg-5 pb-lg-5">
     @yield('content')
 </div>
-<footer class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">
+<footer
+    class="d-flex flex-wrap justify-content-between align-items-center fixed-bottom py-3 px-4 border-top bg-body-tertiary">
     <p class="col-md-4 mb-0 text-body-secondary">© 2024 Notes - v.1.0.0</p>
 
     <ul class="nav col-md-4 justify-content-end">
@@ -84,17 +94,22 @@
     </ul>
 </footer>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         let forms = document.querySelectorAll('form');
-        forms.forEach(function(form) {
-            form.addEventListener('submit', function() {
+        forms.forEach(function (form) {
+            form.addEventListener('submit', function () {
                 let submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
                 if (submitButton) {
                     submitButton.disabled = true;
+                    let spinner = submitButton.querySelector('.spinner-border');
+                    if (spinner) {
+                        spinner.classList.remove('d-none');
+                    }
                 }
             });
         });
     });
 </script>
+
 </body>
 </html>

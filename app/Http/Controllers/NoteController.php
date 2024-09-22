@@ -71,7 +71,7 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): View | RedirectResponse
+    public function edit(string $id): View|RedirectResponse
     {
         $decryptedId = Utils::decryptId($id);
 
@@ -134,7 +134,7 @@ class NoteController extends Controller
             $note = Note::findOrFail($decryptedId);
             $note->delete();
             return redirect()->route('note.index')->with(['success' => 'Nota apagada com sucesso!'])->setStatusCode(200);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Log::error(" NoteController - method: destroy (destroy): " . $e->getMessage());
             return redirect()->route('note.index')->with('error', $e->getMessage())->setStatusCode(500);
         }
